@@ -3,20 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Todo Bleach</title>
+  <title>Robin | Todo Bleach</title>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root { --accent: #ff6a00; --spark: #ffcf8a; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', Arial, sans-serif;
-      background: #050510;
-      color: #f5f5f5;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px 20px;
+      background: #050510; color: #f5f5f5;
       overflow-x: hidden;
     }
 
@@ -41,7 +36,6 @@
       position: absolute; bottom: -10px; border-radius: 50%;
       background: var(--spark); box-shadow: 0 0 8px var(--spark);
       opacity: 0; animation: naik linear infinite;
-      transition: background 1s, box-shadow 1s;
     }
     @keyframes naik {
       0%   { transform: translateY(0) translateX(0); opacity: 0; }
@@ -49,26 +43,68 @@
       100% { transform: translateY(-105vh) translateX(40px); opacity: 0; }
     }
 
-    /* ===== KOTAK TODO ===== */
-    .box {
-      position: relative; z-index: 1;
-      background: rgba(8, 8, 18, 0.82);
-      backdrop-filter: blur(4px);
+    /* ===== UMUM ===== */
+    .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    h2 {
+      font-family: 'Anton', Impact, sans-serif;
+      font-size: 28px; letter-spacing: 3px; text-transform: uppercase;
       border-left: 8px solid var(--accent);
-      max-width: 560px; width: 100%;
-      padding: 28px 24px;
+      padding-left: 12px; margin-bottom: 18px;
       transition: border-color 1s;
+    }
+    .btn {
+      font-family: 'Anton', Impact, sans-serif;
+      font-size: 18px; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; cursor: pointer;
+      border: 3px solid #f5f5f5; background: rgba(0,0,0,0.3); color: #f5f5f5;
+      padding: 12px 26px; transition: all 0.2s; display: inline-block;
+    }
+    .btn:hover { background: #f5f5f5; color: #000; transform: translateY(-3px); }
+    .btn.main { background: var(--accent); border-color: var(--accent); color: #000; }
+    .btn.main:hover { background: #fff; border-color: #fff; }
+
+    /* ===== BAGIAN 1: PORTOFOLIO ===== */
+    #hero { padding-top: 60px; padding-bottom: 80px; }
+    .tag {
+      display: inline-block; background: #f5f5f5; color: #000;
+      font-weight: 600; font-size: 12px; letter-spacing: 3px;
+      padding: 6px 12px; margin-bottom: 14px;
     }
     h1 {
       font-family: 'Anton', Impact, sans-serif;
-      font-size: 36px; letter-spacing: 3px; text-transform: uppercase;
+      font-size: clamp(70px, 18vw, 140px);
+      line-height: 0.95; text-transform: uppercase; letter-spacing: 2px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
     h1 span { color: var(--accent); transition: color 1s; }
-    .sub { font-size: 13px; letter-spacing: 2px; opacity: 0.75; margin: 4px 0 4px; }
+    .sub {
+      font-family: 'Anton', Impact, sans-serif;
+      font-size: 22px; letter-spacing: 4px; margin: 10px 0 20px; text-transform: uppercase;
+    }
+    .bio { max-width: 480px; line-height: 1.7; margin-bottom: 36px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+    .skill {
+      background: rgba(10,10,20,0.75); backdrop-filter: blur(4px);
+      padding: 14px 16px; margin-bottom: 12px; border-left: 4px solid #f5f5f5;
+    }
+    .skill b { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; letter-spacing: 1px; }
+    .bar { height: 8px; background: rgba(255,255,255,0.2); }
+    .bar i { display: block; height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); transition: background 1s; }
+    .buttons { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+    /* ===== BAGIAN 2: TODO ===== */
+    #todo { padding-top: 40px; padding-bottom: 100px; min-height: 100vh; }
+    .box {
+      background: rgba(8,8,18,0.82); backdrop-filter: blur(4px);
+      border-left: 8px solid var(--accent);
+      padding: 28px 24px; transition: border-color 1s;
+    }
+    .box h2 { border: none; padding: 0; font-size: 36px; margin-bottom: 4px; }
+    .box h2 span { color: var(--accent); transition: color 1s; }
+    .box .info { font-size: 13px; letter-spacing: 2px; opacity: 0.75; }
     .lokasi {
       font-family: 'Anton', Impact, sans-serif;
       letter-spacing: 3px; font-size: 14px; color: var(--accent);
-      margin-bottom: 16px; text-transform: uppercase; transition: color 1s;
+      margin: 4px 0 16px; text-transform: uppercase; transition: color 1s;
     }
     .progres { height: 10px; background: rgba(255,255,255,0.15); margin-bottom: 6px; }
     .progres i {
@@ -80,23 +116,15 @@
     .tambah { display: flex; gap: 8px; margin-bottom: 18px; }
     input {
       flex: 1; font-family: inherit; font-size: 16px; padding: 12px;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid #f5f5f5; color: #fff; outline: none;
+      background: rgba(255,255,255,0.08); border: 2px solid #f5f5f5; color: #fff; outline: none;
     }
     input:focus { border-color: var(--accent); }
-    .btn {
-      font-family: 'Anton', Impact, sans-serif;
-      font-size: 16px; letter-spacing: 2px; text-transform: uppercase;
-      background: var(--accent); color: #000;
-      border: none; padding: 0 20px; cursor: pointer;
-      transition: background 1s;
-    }
-    .btn:hover { background: #fff; }
+    .tambah .btn { background: var(--accent); border-color: var(--accent); color: #000; padding: 0 20px; font-size: 16px; }
+    .tambah .btn:hover { background: #fff; border-color: #fff; transform: none; }
     ul { list-style: none; }
     li {
       display: flex; align-items: center; gap: 12px;
-      background: rgba(255,255,255,0.07);
-      border-left: 4px solid #f5f5f5;
+      background: rgba(255,255,255,0.07); border-left: 4px solid #f5f5f5;
       padding: 12px 14px; margin-bottom: 10px;
     }
     li.selesai { border-left-color: #1fa855; opacity: 0.6; }
@@ -105,14 +133,14 @@
     li button { background: none; border: none; color: #ff4d4d; font-size: 20px; cursor: pointer; }
     .kosong { text-align: center; opacity: 0.6; padding: 20px 0; }
     .pangkat { margin-top: 16px; font-size: 14px; text-align: center; letter-spacing: 1px; }
+    footer { margin-top: 40px; font-size: 12px; letter-spacing: 2px; opacity: 0.7; text-align: center; }
 
     /* Tulisan BANKAI */
     #bankai {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.6);
       font-family: 'Anton', Impact, sans-serif;
-      font-size: clamp(60px, 16vw, 160px);
-      letter-spacing: 6px; color: #ffd400;
+      font-size: clamp(60px, 16vw, 160px); letter-spacing: 6px; color: #ffd400;
       text-shadow: 0 0 30px #ff3d00, 0 0 70px #ff3d00;
       z-index: 5; opacity: 0; pointer-events: none;
     }
@@ -131,22 +159,50 @@
   <div id="sparks"></div>
   <div id="bankai">BANKAI!</div>
 
-  <div class="box">
-    <h1>Todo <span>Bleach</span></h1>
-    <p class="sub">// MISI SHINIGAMI HARI INI</p>
-    <p class="lokasi" id="lokasi"></p>
+  <!-- ===== BAGIAN 1: PORTOFOLIO ===== -->
+  <section id="hero" class="wrap">
+    <div class="tag">SUBSTITUTE DEVELOPER</div>
+    <h1>Ro<span>bin</span></h1>
+    <p class="sub">Web Developer in Training</p>
+    <p class="bio">
+      Lagi berlatih menempa kemampuan coding, satu commit demi satu commit.
+      Scroll ke bawah dan coba aplikasi todo list bertema Bleach buatanku.
+    </p>
 
-    <div class="progres"><i id="bar"></i></div>
-    <p class="status" id="status"></p>
+    <h2>Reiatsu (Skill)</h2>
+    <div class="skill"><b><span>HTML</span><span>60%</span></b><div class="bar"><i style="width:60%"></i></div></div>
+    <div class="skill"><b><span>CSS</span><span>50%</span></b><div class="bar"><i style="width:50%"></i></div></div>
+    <div class="skill"><b><span>JavaScript</span><span>30%</span></b><div class="bar"><i style="width:30%"></i></div></div>
+    <div class="skill"><b><span>Git &amp; GitHub</span><span>40%</span></b><div class="bar"><i style="width:40%"></i></div></div>
 
-    <div class="tambah">
-      <input id="input" placeholder="Tulis misi barumu..." maxlength="80">
-      <button class="btn" id="tambah">Tambah</button>
+    <div class="buttons">
+      <a class="btn main" href="#todo">Mulai Misi ↓</a>
+      <a class="btn" href="https://github.com/muqorobin298-lab" target="_blank">GitHub</a>
+      <a class="btn" href="https://muqorobin298-lab.github.io/Robin_Dev/" target="_blank">Portofolio</a>
+      <a class="btn" href="https://muqorobin298-lab.github.io/Kuis-Bleach/" target="_blank">Kuis Bleach</a>
     </div>
+  </section>
 
-    <ul id="daftar"></ul>
-    <p class="pangkat" id="pangkat"></p>
-  </div>
+  <!-- ===== BAGIAN 2: TODO ===== -->
+  <section id="todo" class="wrap">
+    <div class="box">
+      <h2>Todo <span>Bleach</span></h2>
+      <p class="info">// MISI SHINIGAMI HARI INI</p>
+      <p class="lokasi" id="lokasi"></p>
+
+      <div class="progres"><i id="bar"></i></div>
+      <p class="status" id="status"></p>
+
+      <div class="tambah">
+        <input id="input" placeholder="Tulis misi barumu..." maxlength="80">
+        <button class="btn" id="tambah">Tambah</button>
+      </div>
+
+      <ul id="daftar"></ul>
+      <p class="pangkat" id="pangkat"></p>
+    </div>
+    <footer>© ROBIN · DIBUAT DENGAN SEMANGAT SOUL REAPER</footer>
+  </section>
 
   <script>
     // ===== TEMA LATAR (berubah sesuai progres) =====
@@ -262,7 +318,6 @@
       else if (total > 0) p = "Level Murid Akademi. Ayo mulai!";
       $("pangkat").textContent = p;
 
-      // Tema mengikuti progres
       let idxTema = 0;
       if (total > 0 && done === total) idxTema = 4;
       else if (persen >= 75) idxTema = 3;
